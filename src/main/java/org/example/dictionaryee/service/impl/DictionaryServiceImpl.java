@@ -1,20 +1,27 @@
 package org.example.dictionaryee.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import jakarta.ejb.Stateless;
-import lombok.NoArgsConstructor;
-import org.example.dictionaryee.entity.DictionaryType;
-import org.example.dictionaryee.entity.Word;
+import org.example.dictionaryee.repository.api.DictionaryRepository;
 import org.example.dictionaryee.service.api.DictionaryService;
-
-import java.util.UUID;
 
 
 @Stateless
-@NoArgsConstructor
 public class DictionaryServiceImpl implements DictionaryService {
 
+    private DictionaryRepository dictionaryRepository;
+    private final XmlMapper xmlMapper;
+
+
+    public DictionaryServiceImpl() {
+        xmlMapper = new XmlMapper();
+    }
+
     @Override
-    public Word getWord() {
-        return new Word(UUID.randomUUID(), "name", "11111", DictionaryType.LETTERS);
+    public byte[] getWord() throws JsonProcessingException {
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        return xmlMapper.writeValueAsBytes(dictionaryRepository.getWords());
     }
 }

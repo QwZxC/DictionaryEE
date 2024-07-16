@@ -1,22 +1,23 @@
 package org.example.dictionaryee.resources;
 
-import jakarta.ejb.EJB;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.example.dictionaryee.entity.Word;
+import jakarta.ws.rs.core.Response;
 import org.example.dictionaryee.service.api.DictionaryService;
+
+import javax.inject.Inject;
 
 @Path("/dictionary")
 public class DictionaryResource {
 
-    @EJB
+    @Inject
     private DictionaryService dictionaryService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Word getWords() {
-        return dictionaryService.getWord();
+    @Produces(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getWords() throws JsonProcessingException {
+        return Response.ok(dictionaryService.getWord()).build();
     }
 }
