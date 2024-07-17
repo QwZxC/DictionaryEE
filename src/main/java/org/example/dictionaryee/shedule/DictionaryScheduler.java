@@ -1,17 +1,21 @@
 package org.example.dictionaryee.shedule;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
-import jakarta.ejb.Schedule;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+import jakarta.enterprise.concurrent.ManagedScheduledExecutorService;
 import org.example.dictionaryee.entity.Task;
 import org.example.dictionaryee.entity.TaskStatus;
 import org.example.dictionaryee.entity.Word;
 import org.example.dictionaryee.repository.api.DictionaryRepository;
 import org.example.dictionaryee.repository.api.TaskRepository;
 
+import jakarta.annotation.Resource;
+
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 @Singleton
@@ -23,35 +27,26 @@ public class DictionaryScheduler {
     private TaskRepository taskRepository;
     @EJB
     private DictionaryRepository dictionaryRepository;
+    @Resource
+    private ManagedScheduledExecutorService scheduledExecutorService;
 
-    @Schedule(
-            minute = "*/1",
-            hour = "*",
-            info = "1MinScheduler",
-            persistent = false)
-    public void createNewTask() {
-        logger.info("Создание задачи");
-        Task task = new Task("Создать отчёт на" + LocalDate.now(), TaskStatus.TO_PROCESS, LocalDate.now(), 0);
-        taskRepository.createTask(task);
-    }
+    @PostConstruct
+    public void scheduleTask() {
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
+            logger.info("Создание задачи");
+            Task task = new Task("Создать отчёт на" + LocalDate.now(), TaskStatus.TO_PROCESS, LocalDate.now(), 0);
+            taskRepository.createTask(task);
+        }, 0, 1, TimeUnit.DAYS);
 
-    @Schedule(
-            minute = "*/2",
-            hour = "*",
-            persistent = false)
-    public void completeNewTasks() {
-        logger.info("Выполнение всех задач со статусом TO_PROCESS");
-        completeTasks(taskRepository.findAllTasksByStatus(TaskStatus.TO_PROCESS));
-    }
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
+            logger.info("Выполнение всех задач со статусом TO_PROCESS");
+            completeTasks(taskRepository.findAllTasksByStatus(TaskStatus.TO_PROCESS));
+        }, 0, 30, TimeUnit.MINUTES);
 
-    @Schedule(
-            minute = "*/2",
-            hour = "*",
-            persistent = false
-    )
-    public void completeErrorTasks() {
-        logger.info("Выполнение всех задач со статусом ERROR");
-        completeTasks(taskRepository.findAllTasksByStatus(TaskStatus.ERROR));
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
+            logger.info("Выполнение всех задач со статусом ERROR");
+            completeTasks(taskRepository.findAllTasksByStatus(TaskStatus.ERROR));
+        }, 0,30, TimeUnit.MINUTES);
     }
 
     private void completeTasks(List<Task> tasks) {
