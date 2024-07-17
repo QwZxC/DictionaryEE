@@ -8,6 +8,7 @@ import org.example.dictionaryee.entity.DictionaryType;
 import org.example.dictionaryee.entity.Word;
 import org.example.dictionaryee.repository.api.DictionaryRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Stateless
@@ -30,6 +31,13 @@ public class DictionaryRepositoryImpl implements DictionaryRepository {
     public List<Word> findTranslation(Word word) {
         return entityManager.createQuery("SELECT w FROM word w WHERE w.value = :value")
                 .setParameter(VALUE_PARAM, word.getValue())
+                .getResultList();
+    }
+
+    @Override
+    public List<Word> findAllWordsByCreationDate(LocalDate date) {
+        return entityManager.createQuery("SELECT w FROM word w WHERE DATE(w.creationDate) = :date")
+                .setParameter("date", date)
                 .getResultList();
     }
 
