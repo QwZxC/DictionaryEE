@@ -2,10 +2,9 @@ package org.example.dictionaryee.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDate;
 
 
 @Data
@@ -14,7 +13,7 @@ public class Word {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID uuid;
+    private Long id;
 
     @Column(name = "value", nullable = false)
     private String value;
@@ -23,7 +22,7 @@ public class Word {
     private String translation;
 
     @Column(name = "creationDate", nullable = false)
-    private Date creationDate;
+    private LocalDate creationDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "dictionaryType", nullable = false)
@@ -33,9 +32,14 @@ public class Word {
 
     }
 
-    public Word(UUID uuid, String value, String translation) {
-        this.uuid = uuid;
+    public Word(String value) {
+        this.value = value;
+    }
+
+    public Word(String value, String translation, DictionaryType dictionaryType) {
         this.value = value;
         this.translation = translation;
+        this.dictionaryType = dictionaryType;
+        creationDate = LocalDate.now();
     }
 }

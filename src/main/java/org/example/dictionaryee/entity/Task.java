@@ -2,7 +2,7 @@ package org.example.dictionaryee.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -13,10 +13,10 @@ public class Task {
     private UUID id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, length = 10)
     private TaskStatus status;
     @Column(name = "creationDate", nullable = false)
-    private Date creationDate;
+    private LocalDate creationDate;
     @Column(name = "attempts", nullable = false)
     private Integer attempts;
     @Column(name = "errorMessage", length = 300)

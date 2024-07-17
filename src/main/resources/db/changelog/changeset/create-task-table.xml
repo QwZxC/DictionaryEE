@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v1-1" author="Mikhail">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*)
+                FROM INFORMATION_SCHEMA.TABLES
+                WHERE TABLE_SCHEMA = 'PUBLIC'
+                  AND TABLE_NAME = 'TASK'
+            </sqlCheck>
+        </preConditions>
+        <sql>
+            create table TASK
+            (
+                uuid         integer primary key,
+                name         varchar(25)  not null,
+                status       varchar(10)  not null,
+                creationDate date         not null,
+                attempts     int          not null,
+                errorMessage varchar(300) not null
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

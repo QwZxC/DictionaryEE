@@ -22,6 +22,9 @@
         <hibernate.verison>5.2.12.Final</hibernate.verison>
         <jaxb.version>3.0.0</jaxb.version>
         <postgresql.version>42.7.3</postgresql.version>
+        <liquibase.verison>4.28.0</liquibase.verison>
+        <jboss.verison>3.0.16.Final</jboss.verison>
+        <jackson.version>2.11.1</jackson.version>
     </properties>
 
     <dependencies>
@@ -109,13 +112,19 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>3.0.16.Final</version>
+            <version>${jboss.verison}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.11.1</version>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.verison}</version>
         </dependency>
     </dependencies>
 

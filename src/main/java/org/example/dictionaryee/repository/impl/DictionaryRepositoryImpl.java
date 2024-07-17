@@ -3,10 +3,8 @@ package org.example.dictionaryee.repository.impl;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
+import org.example.dictionaryee.entity.DictionaryType;
 import org.example.dictionaryee.entity.Word;
 import org.example.dictionaryee.repository.api.DictionaryRepository;
 
@@ -15,16 +13,57 @@ import java.util.List;
 @Stateless
 public class DictionaryRepositoryImpl implements DictionaryRepository {
 
+    private static final String VALUE_PARAM = "value";
+    private static final String TYPE_PARAM = "type";
+
     @PersistenceContext(unitName = "PostgresDS")
     private EntityManager entityManager;
 
     @Override
-    public List<Word> getWords() {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Word> criteriaQuery = criteriaBuilder.createQuery(Word.class);
-        Root<Word> wordRoot = criteriaQuery.from(Word.class);
-        criteriaQuery.select(wordRoot);
-        TypedQuery<Word> typedQuery = entityManager.createQuery(criteriaQuery);
-        return typedQuery.getResultList();
+    public List<Word> findWords(DictionaryType type) {
+        return entityManager.createQuery("SELECT w FROM word w WHERE w.dictionaryType = :type")
+                .setParameter(TYPE_PARAM, type)
+                .getResultList();
+    }
+
+    @Override
+    public List<Word> findTranslation(Word word) {
+        return entityManager.createQuery("SELECT w FROM word w WHERE w.value = :value")
+                .setParameter(VALUE_PARAM, word.getValue())
+                .getResultList();
+    }
+
+    @Override
+    public Word findWordByValue(String value) {
+        return (Word) entityManager.createQuery("SELECT w FROM word w WHERE w.value = :value")
+                .setParameter(VALUE_PARAM, value)
+                .getResultList().stream().findFirst().orElseThrow();
+    }
+
+    @Override
+    @Transactional
+    public void createWord(Word word) {
+        entityManager.persist(word);
+    }
+
+    @Override
+    public void updateWord(Word word) {
+        getUuid(word);
+        entityManager.merge(word);
+    }
+
+    @Override
+    @Transactional
+    public void deleteWord(Word word) {
+        getUuid(word);
+        entityManager.remove(entityManager.find(Word.class, word.getId()));
+    }
+
+    private void getUuid(Word word) {
+        word.setId(entityManager.createQuery("SELECT w.id FROM word w WHERE w.value = :value AND w.dictionaryType = :type", Long.class)
+                .setParameter(VALUE_PARAM, word.getValue())
+                .setParameter(TYPE_PARAM, word.getDictionaryType())
+                .getResultList()
+                .stream().findFirst().orElseThrow());
     }
 }
