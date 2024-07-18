@@ -5,13 +5,12 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import org.example.dictionaryee.dto.WordDto;
+import org.example.dictionaryee.dto.XmlWords;
 import org.example.dictionaryee.entity.DictionaryType;
 import org.example.dictionaryee.entity.Word;
 import org.example.dictionaryee.mapper.WordMapper;
 import org.example.dictionaryee.repository.api.DictionaryRepository;
 import org.example.dictionaryee.service.api.DictionaryService;
-
-import java.util.List;
 
 @Stateless
 public class DictionaryServiceImpl implements DictionaryService {
@@ -27,8 +26,8 @@ public class DictionaryServiceImpl implements DictionaryService {
 
     @Override
     public String findWords(DictionaryType type) throws JsonProcessingException {
-        List<Word> words = dictionaryRepository.findWords(type);
-        return xmlMapper.writeValueAsString(words);
+        XmlWords xmlWords = new XmlWords(dictionaryRepository.findWords(type));
+        return xmlMapper.writeValueAsString(xmlWords);
     }
 
     @Override
