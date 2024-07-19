@@ -1,6 +1,5 @@
 package org.example.dictionaryee.resources;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,14 +17,14 @@ public class DictionaryResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getWords(@QueryParam("type") DictionaryType type) throws JsonProcessingException {
+    public Response getWords(@QueryParam("type") DictionaryType type) {
         return Response.ok(dictionaryService.findWords(type)).build();
     }
 
     @GET
     @Path("/translation")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getTranslation(@QueryParam("value") String value) throws JsonProcessingException {
+    public Response getTranslation(@QueryParam("value") String value) {
         return Response.ok(dictionaryService.findTranslation(value)).build();
     }
 

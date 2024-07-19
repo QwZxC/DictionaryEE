@@ -9,7 +9,7 @@ import java.util.List;
 public interface DictionaryRepository {
 
     List<Word> findWords(DictionaryType type);
-    List<Word> findTranslation(Word word);
+    Word findTranslation(Word word);
     List<Word> findAllWordsByCreationDate(LocalDate date);
     Word findWordByValue(String value);
     void createWord(Word word);

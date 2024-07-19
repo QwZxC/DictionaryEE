@@ -28,10 +28,10 @@ public class DictionaryRepositoryImpl implements DictionaryRepository {
     }
 
     @Override
-    public List<Word> findTranslation(Word word) {
-        return entityManager.createQuery("SELECT w FROM word w WHERE w.value = :value")
+    public Word findTranslation(Word word) {
+        return (Word) entityManager.createQuery("SELECT w FROM word w WHERE w.value = :value")
                 .setParameter(VALUE_PARAM, word.getValue())
-                .getResultList();
+                .getResultList().stream().findFirst().orElseThrow();
     }
 
     @Override

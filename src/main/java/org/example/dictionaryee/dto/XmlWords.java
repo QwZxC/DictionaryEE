@@ -1,17 +1,15 @@
 package org.example.dictionaryee.dto;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import org.example.dictionaryee.entity.Word;
 
 import java.util.List;
 
-@JacksonXmlRootElement(localName = "words")
+@XmlRootElement(name = "words")
 public class XmlWords {
 
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "word")
+    @XmlElement(name = "word")
     private List<Word> words;
 
     public XmlWords() {}

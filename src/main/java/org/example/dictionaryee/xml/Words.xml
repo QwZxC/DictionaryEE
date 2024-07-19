@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <words xmlns="Words.xsd">
     <word>
+        <id>1</id>
         <value>hello123</value>
         <translation>1233</translation>
-        <dictionaryType>LETTERS</dictionaryType>
-        <creationDate>2024-07-17</creationDate>
+        <dictionary-type>LETTERS</dictionary-type>
+        <creation-date>2024-07-17</creation-date>
     </word>
     <word>
+        <id>2</id>
         <value>hello1234</value>
         <translation>1233</translation>
-        <dictionaryType>LETTERS</dictionaryType>
-        <creationDate>2024-07-17</creationDate>
+        <dictionary-type>LETTERS</dictionary-type>
+        <creation-date>2024-07-17</creation-date>
     </word>
     <word>
+        <id>3</id>
         <value>helloSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</value>
         <translation>1233</translation>
-        <dictionaryType>LETTERS</dictionaryType>
-        <creationDate>2024-07-17</creationDate>
+        <dictionary-type>LETTERS</dictionary-type>
+        <creation-date>2024-07-17</creation-date>
     </word>
     <word>
+        <id>4</id>
         <value>helloSSSSSSSSSSSSSSSSSSSS</value>
         <translation>1233</translation>
-        <dictionaryType>LETTERS</dictionaryType>
-        <creationDate>2024-07-17</creationDate>
+        <dictionary-type>LETTERS</dictionary-type>
+        <creation-date>2024-07-17</creation-date>
     </word>
     <word>
+        <id>5</id>
         <value>hello12</value>
         <translation>1233</translation>
-        <dictionaryType>LETTERS</dictionaryType>
-        <creationDate>2024-07-17</creationDate>
+        <dictionary-type>LETTERS</dictionary-type>
+        <creation-date>2024-07-17</creation-date>
     </word>
 </words>

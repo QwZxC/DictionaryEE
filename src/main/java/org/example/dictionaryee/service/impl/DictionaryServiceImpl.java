@@ -1,7 +1,5 @@
 package org.example.dictionaryee.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import org.example.dictionaryee.dto.WordDto;
@@ -17,23 +15,16 @@ public class DictionaryServiceImpl implements DictionaryService {
 
     @EJB
     private DictionaryRepository dictionaryRepository;
-    private final XmlMapper xmlMapper;
 
-
-    public DictionaryServiceImpl() {
-        xmlMapper = new XmlMapper();
+    @Override
+    public XmlWords findWords(DictionaryType type) {
+        return new XmlWords(dictionaryRepository.findWords(type));
     }
 
     @Override
-    public String findWords(DictionaryType type) throws JsonProcessingException {
-        XmlWords xmlWords = new XmlWords(dictionaryRepository.findWords(type));
-        return xmlMapper.writeValueAsString(xmlWords);
-    }
-
-    @Override
-    public String findTranslation(String value) throws JsonProcessingException {
+    public Word findTranslation(String value) {
         Word word = dictionaryRepository.findWordByValue(value);
-        return xmlMapper.writeValueAsString(dictionaryRepository.findTranslation(word));
+        return dictionaryRepository.findTranslation(word);
     }
 
     @Override

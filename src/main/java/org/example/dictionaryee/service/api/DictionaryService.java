@@ -1,13 +1,14 @@
 package org.example.dictionaryee.service.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.dictionaryee.dto.WordDto;
+import org.example.dictionaryee.dto.XmlWords;
 import org.example.dictionaryee.entity.DictionaryType;
+import org.example.dictionaryee.entity.Word;
 
 public interface DictionaryService {
 
-    String findWords(DictionaryType type) throws JsonProcessingException;
-    String findTranslation(String value) throws JsonProcessingException;
+    XmlWords findWords(DictionaryType type);
+    Word findTranslation(String value);
     void createWord(WordDto word);
     void updateWord(WordDto word);
     void deleteWord(WordDto word);

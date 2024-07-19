@@ -1,42 +1,44 @@
 package org.example.dictionaryee.entity;
 
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
+import org.example.dictionaryee.adapter.LocalDateAdapter;
 
 import java.time.LocalDate;
 
-
-@Data
 @Entity(name = "word")
+@Data
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Word {
 
     @Id
-    @JacksonXmlProperty(localName ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement
     private Long id;
 
-
-    @JacksonXmlProperty(localName ="value")
     @Column(name = "value", nullable = false)
+    @XmlElement
     private String value;
 
-
-    @JacksonXmlProperty(localName ="translation")
     @Column(name = "translation", nullable = false)
+    @XmlElement
     private String translation;
 
-
-    @JacksonXmlProperty
-    @JacksonXmlText
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @Column(name = "creationDate", nullable = false)
+    @XmlElement
     private LocalDate creationDate;
 
-    @JacksonXmlProperty(localName ="dictionaryType")
     @Enumerated(EnumType.STRING)
     @Column(name = "dictionaryType", nullable = false)
+    @XmlElement
     private DictionaryType dictionaryType;
 
     public Word() {

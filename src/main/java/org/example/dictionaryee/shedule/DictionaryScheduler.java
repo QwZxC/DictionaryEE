@@ -1,19 +1,18 @@
 package org.example.dictionaryee.shedule;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.thoughtworks.xstream.XStream;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.enterprise.concurrent.ManagedScheduledExecutorService;
+import org.example.dictionaryee.dto.XmlWords;
 import org.example.dictionaryee.entity.Task;
 import org.example.dictionaryee.entity.TaskStatus;
 import org.example.dictionaryee.entity.Word;
 import org.example.dictionaryee.repository.api.DictionaryRepository;
 import org.example.dictionaryee.repository.api.TaskRepository;
-
-import jakarta.annotation.Resource;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,11 +30,13 @@ public class DictionaryScheduler {
     private DictionaryRepository dictionaryRepository;
     @Resource
     private ManagedScheduledExecutorService scheduledExecutorService;
-    private final XmlMapper xmlMapper = new XmlMapper();
-
+    private XStream xStream;
 
     @PostConstruct
     public void scheduleTask() {
+        xStream = new XStream();
+        xStream.alias("word", Word.class);
+        xStream.alias("words", XmlWords.class);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             logger.info("Создание задачи");
             Task task = new Task("Создать отчёт на" + LocalDate.now(), TaskStatus.TO_PROCESS, LocalDate.now(), 0);
@@ -58,11 +59,12 @@ public class DictionaryScheduler {
             try {
                 task.setStatus(TaskStatus.TO_PROCESS);
                 taskRepository.updateTask(task);
-                List<Word> words = dictionaryRepository.findAllWordsByCreationDate(task.getCreationDate());
-                logger.info(xmlMapper.writeValueAsString(words));
+                XmlWords words = new XmlWords(dictionaryRepository.findAllWordsByCreationDate(task.getCreationDate()));
+                String xml = xStream.toXML(words);
+                logger.info(xml);
                 task.setStatus(TaskStatus.COMPLETED);
                 taskRepository.updateTask(task);
-            } catch (JsonProcessingException e) {
+            } catch (Exception e) {
                 task.setStatus(TaskStatus.ERROR);
                 task.setErrorMessage(e.getMessage());
                 task.setAttempts(task.getAttempts() + 1);
