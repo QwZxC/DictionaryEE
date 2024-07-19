@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<words xmlns="Words.xsd">
+<words xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Words.xsd">
     <word>
         <id>1</id>
         <value>hello123</value>

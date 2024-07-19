@@ -1,8 +1,8 @@
 package org.example.dictionaryee.repository.impl;
 
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.example.dictionaryee.entity.Task;
 import org.example.dictionaryee.entity.TaskStatus;
 import org.example.dictionaryee.repository.api.TaskRepository;

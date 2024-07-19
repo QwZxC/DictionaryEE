@@ -1,7 +1,7 @@
 package org.example.dictionaryee.service.impl;
 
-import jakarta.ejb.EJB;
-import jakarta.ejb.Stateless;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import org.example.dictionaryee.dto.WordDto;
 import org.example.dictionaryee.dto.XmlWords;
 import org.example.dictionaryee.entity.DictionaryType;

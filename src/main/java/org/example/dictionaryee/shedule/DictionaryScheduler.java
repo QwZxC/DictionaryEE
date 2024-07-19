@@ -1,18 +1,17 @@
 package org.example.dictionaryee.shedule;
 
-import com.thoughtworks.xstream.XStream;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Singleton;
-import jakarta.ejb.Startup;
-import jakarta.enterprise.concurrent.ManagedScheduledExecutorService;
-import org.example.dictionaryee.dto.XmlWords;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.enterprise.concurrent.ManagedScheduledExecutorService;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSContext;
 import org.example.dictionaryee.entity.Task;
 import org.example.dictionaryee.entity.TaskStatus;
-import org.example.dictionaryee.entity.Word;
-import org.example.dictionaryee.repository.api.DictionaryRepository;
 import org.example.dictionaryee.repository.api.TaskRepository;
+import org.example.dictionaryee.service.api.XmlService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,32 +25,29 @@ public class DictionaryScheduler {
     private static final Logger logger = Logger.getLogger(DictionaryScheduler.class.getName());
     @EJB
     private TaskRepository taskRepository;
-    @EJB
-    private DictionaryRepository dictionaryRepository;
     @Resource
     private ManagedScheduledExecutorService scheduledExecutorService;
-    private XStream xStream;
+    @EJB
+    private XmlService xmlService;
+    @Resource(lookup = "java:/ConnectionFactory")
+    private ConnectionFactory connectionFactory;
 
     @PostConstruct
     public void scheduleTask() {
-        xStream = new XStream();
-        xStream.alias("word", Word.class);
-        xStream.alias("words", XmlWords.class);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             logger.info("Создание задачи");
             Task task = new Task("Создать отчёт на" + LocalDate.now(), TaskStatus.TO_PROCESS, LocalDate.now(), 0);
             taskRepository.createTask(task);
         }, 0, 1, TimeUnit.MINUTES);
-
         startTasks(TaskStatus.TO_PROCESS);
         startTasks(TaskStatus.ERROR);
     }
 
     private void startTasks(TaskStatus status) {
         scheduledExecutorService.scheduleAtFixedRate(() -> {
-            logger.info("Выполнение всех задач со статусом ERROR");
+            logger.info("Выполнение всех задач со статусом " + status);
             completeTasks(taskRepository.findAllTasksByStatus(status));
-        }, 0, 5, TimeUnit.MINUTES);
+        }, 0, 2, TimeUnit.MINUTES);
     }
 
     private void completeTasks(List<Task> tasks) {
@@ -59,9 +55,8 @@ public class DictionaryScheduler {
             try {
                 task.setStatus(TaskStatus.TO_PROCESS);
                 taskRepository.updateTask(task);
-                XmlWords words = new XmlWords(dictionaryRepository.findAllWordsByCreationDate(task.getCreationDate()));
-                String xml = xStream.toXML(words);
-                logger.info(xml);
+                xmlService.createXmlDoc(task);
+                JMSContext context = connectionFactory.createContext();
                 task.setStatus(TaskStatus.COMPLETED);
                 taskRepository.updateTask(task);
             } catch (Exception e) {

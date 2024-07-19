@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="Words.xsd"
+           xmlns="Words.xsd">
+    <xsd:element name="words">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="word" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="id" type="xsd:int"/>
+                            <xsd:element name="value" type="xsd:string"/>
+                            <xsd:element name="translation" type="xsd:string"/>
+                            <xsd:element name="dictionary-type" type="xsd:string"/>
+                            <xsd:element name="creation-date" type="xsd:date"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

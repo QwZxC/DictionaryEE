@@ -1,6 +1,6 @@
 package org.example.dictionaryee.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

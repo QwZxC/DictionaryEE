@@ -1,9 +1,9 @@
 package org.example.dictionaryee.resources;
 
-import jakarta.ejb.EJB;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import javax.ejb.EJB;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.example.dictionaryee.dto.WordDto;
 import org.example.dictionaryee.entity.DictionaryType;
 import org.example.dictionaryee.service.api.DictionaryService;

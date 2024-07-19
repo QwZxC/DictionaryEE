@@ -1,9 +1,9 @@
 package org.example.dictionaryee.repository.impl;
 
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import org.example.dictionaryee.entity.DictionaryType;
 import org.example.dictionaryee.entity.Word;
 import org.example.dictionaryee.repository.api.DictionaryRepository;

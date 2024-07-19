@@ -1,12 +1,12 @@
 package org.example.dictionaryee.entity;
 
 
-import jakarta.persistence.*;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
 import org.example.dictionaryee.adapter.LocalDateAdapter;
 
@@ -33,12 +33,12 @@ public class Word {
 
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @Column(name = "creationDate", nullable = false)
-    @XmlElement
+    @XmlElement(name = "creation-date")
     private LocalDate creationDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "dictionaryType", nullable = false)
-    @XmlElement
+    @XmlElement(name = "dictionary-type")
     private DictionaryType dictionaryType;
 
     public Word() {
