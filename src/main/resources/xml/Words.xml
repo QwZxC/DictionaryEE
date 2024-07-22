@@ -1,38 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<words xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Words.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<words xmlns="Words.xsd">
     <word>
-        <id>1</id>
-        <value>hello123</value>
-        <translation>1233</translation>
+        <id>17</id>
+        <value>dwwwe</value>
+        <translation>2q12</translation>
         <dictionary-type>LETTERS</dictionary-type>
-        <creation-date>2024-07-17</creation-date>
+        <creation-date>2024-07-22</creation-date>
     </word>
     <word>
-        <id>2</id>
-        <value>hello1234</value>
-        <translation>1233</translation>
+        <id>18</id>
+        <value>dqwwe</value>
+        <translation>2q122</translation>
         <dictionary-type>LETTERS</dictionary-type>
-        <creation-date>2024-07-17</creation-date>
+        <creation-date>2024-07-22</creation-date>
     </word>
     <word>
-        <id>3</id>
-        <value>helloSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</value>
-        <translation>1233</translation>
+        <id>19</id>
+        <value>dxxwe</value>
+        <translation>2q442</translation>
         <dictionary-type>LETTERS</dictionary-type>
-        <creation-date>2024-07-17</creation-date>
-    </word>
-    <word>
-        <id>4</id>
-        <value>helloSSSSSSSSSSSSSSSSSSSS</value>
-        <translation>1233</translation>
-        <dictionary-type>LETTERS</dictionary-type>
-        <creation-date>2024-07-17</creation-date>
-    </word>
-    <word>
-        <id>5</id>
-        <value>hello12</value>
-        <translation>1233</translation>
-        <dictionary-type>LETTERS</dictionary-type>
-        <creation-date>2024-07-17</creation-date>
+        <creation-date>2024-07-22</creation-date>
     </word>
 </words>

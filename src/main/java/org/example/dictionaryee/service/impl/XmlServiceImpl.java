@@ -1,9 +1,5 @@
 package org.example.dictionaryee.service.impl;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import lombok.SneakyThrows;
 import org.example.dictionaryee.dto.XmlWords;
 import org.example.dictionaryee.entity.Task;
@@ -11,6 +7,10 @@ import org.example.dictionaryee.repository.api.DictionaryRepository;
 import org.example.dictionaryee.service.api.XmlService;
 import org.example.dictionaryee.validator.api.XmlValidator;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.util.logging.Logger;
 
@@ -30,11 +30,15 @@ public class XmlServiceImpl implements XmlService {
         JAXBContext jaxbContext = JAXBContext.newInstance(XmlWords.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "Words.xsd");
-        File file = new File("C:\\Users\\vagin.my.kst\\Desktop\\reports\\Words.xml");
+        File file = new File("...");
         marshaller.marshal(words, file);
         marshaller.marshal(words, System.out);
         validator.validate();
         logger.info("XML-файл создан");
+    }
+
+    @Override
+    public File getXmlDoc() {
+        return  new File("...");
     }
 }

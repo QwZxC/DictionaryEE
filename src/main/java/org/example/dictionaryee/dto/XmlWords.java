@@ -7,11 +7,11 @@ import org.example.dictionaryee.entity.Word;
 
 import java.util.List;
 
-@XmlRootElement(name = "words")
+@XmlRootElement(name = "words", namespace = "Words.xsd")
 @Getter
 public class XmlWords {
 
-    @XmlElement(name = "word")
+    @XmlElement(name = "word",namespace = "Words.xsd")
     private List<Word> words;
 
     public XmlWords() {}

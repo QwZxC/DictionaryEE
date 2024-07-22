@@ -15,31 +15,31 @@ import java.time.LocalDate;
 @Entity(name = "word")
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement
+@XmlRootElement(namespace = "Words.xsd")
 public class Word {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement
+    @XmlElement(name = "id", namespace = "Words.xsd")
     private Long id;
 
     @Column(name = "value", nullable = false)
-    @XmlElement
+    @XmlElement(name = "value", namespace = "Words.xsd")
     private String value;
 
     @Column(name = "translation", nullable = false)
-    @XmlElement
+    @XmlElement(name = "translation", namespace = "Words.xsd")
     private String translation;
-
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    @Column(name = "creationDate", nullable = false)
-    @XmlElement(name = "creation-date")
-    private LocalDate creationDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "dictionaryType", nullable = false)
-    @XmlElement(name = "dictionary-type")
+    @XmlElement(name = "dictionary-type", namespace = "Words.xsd")
     private DictionaryType dictionaryType;
+
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @Column(name = "creationDate", nullable = false)
+    @XmlElement(name = "creation-date", namespace = "Words.xsd")
+    private LocalDate creationDate;
 
     public Word() {
 
