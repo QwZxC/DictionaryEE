@@ -30,7 +30,7 @@ public class XmlServiceImpl implements XmlService {
         JAXBContext jaxbContext = JAXBContext.newInstance(XmlWords.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        File file = new File("...");
+        File file = new File("C:\\Users\\vagin.my.kst\\IdeaProjects\\DictionaryEE\\src\\main\\resources\\xml\\Words.xml");
         marshaller.marshal(words, file);
         marshaller.marshal(words, System.out);
         validator.validate();
@@ -39,6 +39,6 @@ public class XmlServiceImpl implements XmlService {
 
     @Override
     public File getXmlDoc() {
-        return  new File("...");
+        return  new File("C:\\Users\\vagin.my.kst\\IdeaProjects\\DictionaryEE\\src\\main\\resources\\xml\\Words.xml");
     }
 }
