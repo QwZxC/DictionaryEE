@@ -24,7 +24,7 @@ public class XmlValidatorImpl implements XmlValidator {
     @PostConstruct
     private void initValidator() throws SAXException {
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Source schemaFile = new StreamSource(getFile("C:/Users/vagin.my.kst/IdeaProjects/DictionaryEE/src/main/java/org/example/dictionaryee/validator/impl/Words.xsd"));
+        Source schemaFile = new StreamSource(getFile("..."));
         Schema schema = factory.newSchema(schemaFile);
         validator = schema.newValidator();
     }
@@ -35,6 +35,6 @@ public class XmlValidatorImpl implements XmlValidator {
 
     @Override
     public void validate() throws IOException, SAXException {
-        validator.validate(new StreamSource(getFile("C:\\Users\\vagin.my.kst\\IdeaProjects\\DictionaryEE\\src\\main\\resources\\xml\\Words.xml")));
+        validator.validate(new StreamSource(getFile("...")));
     }
 }
