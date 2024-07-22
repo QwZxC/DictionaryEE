@@ -4,6 +4,7 @@ import org.example.dictionaryee.jms.api.Producer;
 import org.example.dictionaryee.service.api.XmlService;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jms.*;
 import java.util.logging.Level;
@@ -16,6 +17,7 @@ public class ProducerImpl implements Producer {
     private ConnectionFactory connectionFactory;
     @Resource(lookup = "java:/jms/queue/ExpiryQueue")
     private Destination destination;
+    @EJB
     private XmlService xmlService;
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
